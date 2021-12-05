@@ -33,10 +33,11 @@ class Color {
 		this.rgb[2] = 255 - this.getB();
 	}
 	
-	void adjustBrightness(int val){
-		 this.rgb[0] = Math.max(Math.min(this.getR() + val, 255), 0);
-		 this.rgb[1] = Math.max(Math.min(this.getG() + val, 255), 0);
-		 this.rgb[2] = Math.max(Math.min(this.getB() + val, 255), 0);
+	Color adjustBrightness(int val){
+		 rgb[0] = Math.max(Math.min(getR() + val, 255), 0);
+		 rgb[1] = Math.max(Math.min(getG() + val, 255), 0);
+		 rgb[2] = Math.max(Math.min(getB() + val, 255), 0);
+		 return this;
 	}
 	
 	Color setGrey(){
