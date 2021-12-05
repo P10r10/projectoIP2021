@@ -7,14 +7,13 @@ class EditImage {
 					res.setColor(x, y, img.getColor(x, y));
 	}
 	
-	private static void copyImage(int xp, int yp, ColorImage res, ColorImage img){
+	static void copyImage(int xp, int yp, ColorImage res, ColorImage img){
 		for (int y = yp; y < img.getHeight() + yp && y < res.getHeight(); y++)
 			for (int x = xp; x < img.getWidth() + xp && x < res.getWidth(); x++)
 					res.setColor(x, y, img.getColor(x - xp, y - yp));
 	}
 	
-	static void fillImage(ColorImage img){
-		ColorImage pat = new ColorImage("src/pattern.bmp");
+	static void fillImage(ColorImage img, ColorImage pat){
 		for (int y = 0; y < img.getWidth(); y += pat.getHeight())
 			for (int x = 0; x < img.getWidth(); x += pat.getWidth())
 				copyImage(x, y, img, pat);

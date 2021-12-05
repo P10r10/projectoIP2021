@@ -34,7 +34,7 @@ class ColorImage {
 		return new Color(rgb[0], rgb[1], rgb[2]);
 	}
 	
-	void invertColor(){
+	void invertColor(){//REMOVE?
 		for (int i = 0; i < this.getHeight(); i++)
 			for (int j = 0; j < this.getWidth(); j++){
 				Color tmp = getColor(j, i);
@@ -43,7 +43,7 @@ class ColorImage {
 			}
 		}
 	
-	void adjustBrightness(int val){
+	void adjustBrightness(int val){//REMOVE?
 		for (int i = 0; i < this.getHeight(); i++)
 			for (int j = 0; j < this.getWidth(); j++){
 				Color tmp = getColor(j, i);
@@ -52,43 +52,42 @@ class ColorImage {
 			}
 	}
 	
-	void reflectImage(){
-		for (int i = 0; i < this.getHeight(); i++)
-			for (int j = 0; j < this.getWidth() / 2; j++){
+	void reflectImage(){//REMOVE?
+		for (int i = 0; i < getHeight(); i++)
+			for (int j = 0; j < getWidth() / 2; j++){
 				Color tmp = getColor(j, i);
-				this.setColor(j, i, this.getColor(this.getWidth() - j - 1, i));
-				this.setColor(this.getWidth() - j - 1, i, tmp);
+				setColor(j, i, getColor(getWidth() - j - 1, i));
+				setColor(getWidth() - j - 1, i, tmp);
 			}
 	}
 	
-	void pasteImage(int x, int y, ColorImage img){
+	void pasteImage(int x, int y, ColorImage img){//REMOVE?
 		for (int i = Math.max(y, 0); i < Math.min(img.getHeight() + y, this.getHeight()); i++)
 			for (int j = Math.max(x, 0); j < Math.min(img.getWidth() + x, this.getWidth()); j++)
 				this.setColor(j, i, img.getColor(j - x, i - y));
 	}
 	
-	ColorImage blackAndWhite(){
-		ColorImage res = new ColorImage(this.getWidth(), this.getHeight());
-		for (int i = 0; i < this.getHeight(); i++)
-			for (int j = 0; j < this.getWidth(); j++){
-				Color tmp = getColor(j, i);
-				if (tmp.getLuminance() < 128)
-					res.setColor(j, i, Color.BLACK);
+	ColorImage blackAndWhite(){//REMOVE?
+		ColorImage res = new ColorImage(getWidth(), getHeight());
+		for (int y = 0; y < getHeight(); y++)
+			for (int x = 0; x < getWidth(); x++){
+				if (getColor(x, y).getLuminance() < 128)
+					res.setColor(x, y, Color.BLACK);
 				else
-					res.setColor(j, i, Color.WHITE);
+					res.setColor(x, y, Color.WHITE);
 			}
 		return res;
 	}
 	
-	ColorImage copyImage(){
-		ColorImage res = new ColorImage(this.getWidth(), this.getHeight());
-		for (int i = 0; i < this.getHeight(); i++)
-			for (int j = 0; j < this.getWidth(); j++)
-					res.setColor(j, i, this.getColor(j, i));
+	ColorImage copyImage(){//REMOVE?
+		ColorImage res = new ColorImage(getWidth(), getHeight());
+		for (int i = 0; i < getHeight(); i++)
+			for (int j = 0; j < getWidth(); j++)
+					res.setColor(j, i, getColor(j, i));
 		return res;
 	}
 	/*ainda nao esta blindada para valores invalidos de x e y*/
-	ColorImage selection(int start_x, int start_y, int end_x, int end_y){
+	ColorImage selection(int start_x, int start_y, int end_x, int end_y){//REMOVE?
 		ColorImage res = new ColorImage(end_x - start_x, end_y - start_y);
 		for (int i = start_y; i < end_y; i++)
 			for (int j = start_x; j < end_x; j++)

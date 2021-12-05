@@ -2,9 +2,9 @@ class Foto {
 	
 	private int x;
 	private int y;
-	private ColorImage img;
-	private String caption;//legenda
-	private String date;
+	ColorImage img;
+	String caption;//legenda
+	String date;
 	
 	Foto(ColorImage img, String caption,String date){
 		this.img = img;
@@ -22,18 +22,6 @@ class Foto {
 		return y;
 	}
 	
-	ColorImage getImage(){
-		return img;
-	}
-	
-	String getCaption(){
-		return caption;
-	}
-	
-	String getDate(){
-		return date;
-	}
-
 	void setX(int x){
 		this.x = x;
 	}
