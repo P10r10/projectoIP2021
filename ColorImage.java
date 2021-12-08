@@ -34,22 +34,16 @@ class ColorImage {
 		return new Color(rgb[0], rgb[1], rgb[2]);
 	}
 	
-	void invertColor(){//REMOVE?
-		for (int i = 0; i < this.getHeight(); i++)
-			for (int j = 0; j < this.getWidth(); j++){
-				Color tmp = getColor(j, i);
-				tmp.invert();
-				this.setColor(j, i, tmp);
-			}
-		}
+	void invertColor(){
+		for (int i = 0; i < getHeight(); i++)
+			for (int j = 0; j < getWidth(); j++)
+				setColor(j, i, getColor(j, i).invert());
+	}
 	
-	void adjustBrightness(int val){//REMOVE?
-		for (int i = 0; i < this.getHeight(); i++)
-			for (int j = 0; j < this.getWidth(); j++){
-				Color tmp = getColor(j, i);
-				tmp.adjustBrightness(val);
-				this.setColor(j, i, tmp);
-			}
+	void adjustBrightness(int val){
+		for (int i = 0; i < getHeight(); i++)
+			for (int j = 0; j < getWidth(); j++)
+				setColor(j, i, getColor(j, i).changeBrightness(val));
 	}
 	
 	void reflectImage(){//REMOVE?
@@ -60,13 +54,7 @@ class ColorImage {
 				setColor(getWidth() - j - 1, i, tmp);
 			}
 	}
-	
-	void pasteImage(int x, int y, ColorImage img){//REMOVE?
-		for (int i = Math.max(y, 0); i < Math.min(img.getHeight() + y, this.getHeight()); i++)
-			for (int j = Math.max(x, 0); j < Math.min(img.getWidth() + x, this.getWidth()); j++)
-				this.setColor(j, i, img.getColor(j - x, i - y));
-	}
-	
+/*Considerar remover as funcoes abaixo*/
 	ColorImage blackAndWhite(){//REMOVE?
 		ColorImage res = new ColorImage(getWidth(), getHeight());
 		for (int y = 0; y < getHeight(); y++)

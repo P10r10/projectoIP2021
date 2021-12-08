@@ -1,15 +1,9 @@
 class EditImage {
 	
-	static void copyTransparency(ColorImage res, ColorImage img){
-		for (int y = 0; y < Math.min(res.getHeight(), img.getHeight()); y++)
-			for (int x = 0; x < Math.min(res.getWidth(), img.getWidth()); x++)
-				if (!img.getColor(x, y).isSameColor(Color.WHITE))
-					res.setColor(x, y, img.getColor(x, y));
-	}
-	
 	static void copyImage(int xp, int yp, ColorImage res, ColorImage img){
 		for (int y = yp; y < img.getHeight() + yp && y < res.getHeight(); y++)
 			for (int x = xp; x < img.getWidth() + xp && x < res.getWidth(); x++)
+				if (!img.getColor(x - xp, y - yp).isSameColor(Color.WHITE))
 					res.setColor(x, y, img.getColor(x - xp, y - yp));
 	}
 	
@@ -28,28 +22,28 @@ class EditImage {
 		return res;
 	}
 	
-	/*SCALE*/
-	
-	/*VIGNETE*/
-	
-	
-	
-/*	static void posterize(ColorImage img, Color light, Color dark) {//REMOVE
-        for(int x = 0; x != img.getWidth(); x++)
-            for(int y = 0; y != img.getHeight(); y++)
-                if(img.getColor(x, y).getLuminance() < 128)
-                    img.setColor(x, y, dark);
-                else
-                    img.setColor(x, y, light); 
-    }
-	static Color brighter(Color col, int n){//REMOVE
-		return col.adjustBrightness(n);
+	static ColorImage scale(ColorImage img, double factor){
+		ColorImage res = new ColorImage((int)(img.getWidth() * factor),
+				(int)(img.getHeight() * factor));
+		for (int y = 0; y < res.getHeight(); y++)
+			for (int x = 0; x < res.getWidth(); x++)
+				res.setColor(x, y, img.getColor((int)(x / factor),
+						(int)(y / factor)));
+		return res;
 	}
-	static void noise(ColorImage img, int value) {//REMOVE
-        for(int x = 0; x != img.getWidth(); x++) {
-            for(int y = 0; y != img.getHeight(); y++) {
-                img.setColor(x, y, brighter(img.getColor(x, y), (int)(Math.random()*2*value) - value));
-            }
-        }
-    }*/
+	
+	static ColorImage vignette(ColorImage img, int radius){
+		ColorImage res = new ColorImage(img.getWidth(), img.getHeight());
+		int h = img.getWidth() / 2;
+		int k = img.getHeight() / 2;
+			for (int y = 0; y < res.getHeight(); y++)
+				for (int x = 0; x < res.getWidth(); x++){
+					int dist = (int)(Math.sqrt(Math.pow(x - h, 2) + Math.pow(y - k, 2)));
+					if(dist > radius)
+						res.setColor(x, y, img.getColor(x, y).changeBrightness(-1 * (dist - radius) * 2));
+					else
+						res.setColor(x, y, img.getColor(x, y));
+				}
+		return res;
+	}
 }

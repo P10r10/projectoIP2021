@@ -27,13 +27,15 @@ class Color {
 		this.rgb = new int[] {r, g, b};
 	}
 	
-	void invert(){
-		this.rgb[0] = 255 - this.getR();
-		this.rgb[1] = 255 - this.getG();
-		this.rgb[2] = 255 - this.getB();
+	Color invert(){
+		Color res = new Color(0, 0, 0);
+		res.rgb[0] = 255 - getR();
+		res.rgb[1] = 255 - getG();
+		res.rgb[2] = 255 - getB();
+		return res;
 	}
 	
-	Color adjustBrightness(int val){
+	Color changeBrightness(int val){
 		 rgb[0] = Math.max(Math.min(getR() + val, 255), 0);
 		 rgb[1] = Math.max(Math.min(getG() + val, 255), 0);
 		 rgb[2] = Math.max(Math.min(getB() + val, 255), 0);
