@@ -29,12 +29,4 @@ class Foto {
 	void setY(int y){
 		this.y = y;
 	}
-	
-	void setCaption(String caption){
-		this.caption = caption;
-	}
-	
-	void setDate(String date){
-		this.date = date;
-	}
 }

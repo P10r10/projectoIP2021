@@ -42,7 +42,7 @@ class Color {
 		 return this;
 	}
 	
-	Color setGrey(){
+	Color setGray(){
 		int val = (int)(getR() * 0.3 + getG() * 0.59 + getB() * 0.11);
 		rgb[0] = val;
 		rgb[1] = val;

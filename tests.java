@@ -3,10 +3,10 @@ class tests {
 /*copiar a parte não transparente de uma imagem para cima de outra imagem.*/
 
 	static void test1(){
-		ColorImage img = new ColorImage("face.bmp");
+		ColorImage img = new ColorImage("mona.bmp");
 		ColorImage base = new ColorImage(200, 200);
 		base.invertColor();
-		EditImage.copyImage(30, 40, base, img);
+		EditImage.pasteImage(30, 40, base, img);
 		System.out.println();//Colocar breakpoint nesta linha(Pandion)
 	}
 	
@@ -15,8 +15,8 @@ numa imagem padrão dada que será replicada (pode incluir transparência)*/
 	
 	static void test2(){
 		ColorImage base = new ColorImage(433, 333);
-		ColorImage leafs = new ColorImage("blue_leafs.bmp");
-		EditImage.fillImage(base, leafs);
+		ColorImage fill = new ColorImage("blue_leafs.bmp");
+		EditImage.fillPattern(base, fill);
 		System.out.println();//Colocar breakpoint nesta linha(Pandion)
 	}
 	
@@ -33,7 +33,7 @@ numa imagem padrão dada que será replicada (pode incluir transparência)*/
 	
 	static void test4(){
 		ColorImage img = new ColorImage("margot.png");
-		ColorImage grey = EditImage.copyGrey(img);
+		ColorImage gray = EditImage.copyGray(img);
 		System.out.println();//Colocar breakpoint nesta linha(Pandion)
 	}
 	
@@ -45,9 +45,8 @@ do centro a imagem começa a escurecer*/
 	static void test5(){
 		ColorImage img = new ColorImage("margot.png");
 		ColorImage vignette = EditImage.vignette(img, 80);
-		ColorImage img2 = new ColorImage("charlize.png");
-		ColorImage vignette2 = EditImage.vignette(img2, 30);
-		
+		ColorImage img2 = new ColorImage("refaeli.png");
+		ColorImage vignette2 = EditImage.vignette(img2, 65);
 		System.out.println();//Colocar breakpoint nesta linha(Pandion)
 	}
 	
@@ -62,8 +61,8 @@ a data de criação e o posicionamento da imagem na página; */
 		System.out.println("A foto \"" + myFoto.caption
 			+"\" foi tirada a " + myFoto.date + ". Está na posição ("
 			+ myFoto.getX() + ", " + myFoto.getY() + ").");
-		myFoto.setCaption("Rosto Pintado");
-		myFoto.setDate("15/12/2021");
+		myFoto.caption = "Rosto Pintado";
+		myFoto.date = "15/12/2021";
 		myFoto.setX(111);
 		myFoto.setY(222);
 		System.out.println("\nDepois da alteração:");
@@ -75,19 +74,8 @@ a data de criação e o posicionamento da imagem na página; */
 	}
 
 /*Desenvolver uma classe de objetos que representa uma página do álbum. 
-1. dada uma imagem base, criar um padrão de preenchimento do fundo da página;*/
-	
-	static void test7(){
-		ColorImage img = new ColorImage("charlize.png");
-		ColorImage base = new ColorImage("mona.bmp");
-		Foto myFoto = new Foto(img, "Caption", "Date");
-		Pagina myPage = new Pagina(myFoto, 675, 800);
-		myPage.fillPage(base);
-		
-		System.out.println("");//Colocar breakpoint nesta linha(Pandion)
-	}
-	
-/*2. adicionar (no fim da página) uma Foto nova;
+1. dada uma imagem base, criar um padrão de preenchimento do fundo da página;
+2. adicionar (no fim da página) uma Foto nova;
 3. remover uma Foto da página numa posição dada, deslocando as restantes;
 4. trocar as posições de duas Fotos na página;
 5. calcular automaticamente e posicionar as fotos na página (admita um
@@ -95,18 +83,48 @@ espaçamento mínimo de 5 pixel entre imagens e para as margens);
 6. obter a visualização final da página.*/
 	
 	static void test8(){
-		ColorImage img = new ColorImage("charlize.png");
-//		ColorImage foto1 = new ColorImage("src/face.bmp");
-		ColorImage pattern = new ColorImage("src/mona.bmp");
-		Foto myFoto = new Foto(img, "Caption", "Date");
+		Foto myFoto = new Foto(new ColorImage("charlize.png"), "", "");
 		Pagina myPage = new Pagina(myFoto, 675, 800);
-		myPage.fillPage(pattern);
+		myPage.fillPattern(new ColorImage("mona.bmp"));
+		myPage.addPhoto(new Foto(new ColorImage("diane.png"), "", ""));
+		myPage.addPhoto(new Foto(new ColorImage("face.bmp"), "", ""));
+		myPage.addPhoto(new Foto(new ColorImage("refaeli.png"), "", ""));
+		myPage.addPhoto(new Foto(new ColorImage("face.bmp"), "", ""));
+		myPage.addPhoto(new Foto(new ColorImage("margot.png"), "", ""));
+		myPage.removePhoto(2);
+		myPage.swapPhoto(4, 1);
 		
-		System.out.println("");//Colocar breakpoint nesta linha(Pandion)
+		System.out.println();//Colocar breakpoint nesta linha(Pandion)
 	}
 	
-//CRIAR EXCEPCÕES
+/*Um objeto do tipo Álbum pode ser criado fornecendo a largura e altura
+do Álbum em pixéis e o número de páginas. Um objecto do tipo Poster é
+compostos por um vector de objetos do tipo Página e por um inteiro que
+indica a página actual. Após a sua criação, deve ser possível:
+1. ir para a página seguinte;
+2. ir para a página anterior;
+3. visualizar a página actual;
+4. trocar as posições de duas páginas no álbum; */
 	
-	
-	
+	static void test9(){
+		ColorImage[] imgs = new ColorImage[4];
+		imgs[0] = new ColorImage("charlize.png");
+		imgs[1] = new ColorImage("diane.png");
+		imgs[2] = new ColorImage("refaeli.png");
+		imgs[3] = new ColorImage("margot.png");
+		
+		ColorImage[] imgs2 = new ColorImage[4];
+		imgs[0] = new ColorImage("margot.png");
+		imgs[1] = new ColorImage("refaeli.png");
+		imgs[2] = new ColorImage("diane.png");
+		imgs[3] = new ColorImage("charlize.png");
+		
+		Album myAlbum = new Album(0, 0, 2);
+		myAlbum.addPage(new Pagina(imgs, 440, 640));
+		myAlbum.addPage(new Pagina(imgs2, 440, 640));
+		myAlbum.displayCurrentPage();
+//		myAlbum.nextPage();
+		
+		System.out.println();//Colocar breakpoint nesta linha(Pandion)
+	}
 }

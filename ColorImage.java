@@ -45,43 +45,4 @@ class ColorImage {
 			for (int j = 0; j < getWidth(); j++)
 				setColor(j, i, getColor(j, i).changeBrightness(val));
 	}
-	
-	void reflectImage(){//REMOVE?
-		for (int i = 0; i < getHeight(); i++)
-			for (int j = 0; j < getWidth() / 2; j++){
-				Color tmp = getColor(j, i);
-				setColor(j, i, getColor(getWidth() - j - 1, i));
-				setColor(getWidth() - j - 1, i, tmp);
-			}
-	}
-/*Considerar remover as funcoes abaixo*/
-	ColorImage blackAndWhite(){//REMOVE?
-		ColorImage res = new ColorImage(getWidth(), getHeight());
-		for (int y = 0; y < getHeight(); y++)
-			for (int x = 0; x < getWidth(); x++){
-				if (getColor(x, y).getLuminance() < 128)
-					res.setColor(x, y, Color.BLACK);
-				else
-					res.setColor(x, y, Color.WHITE);
-			}
-		return res;
-	}
-	
-	ColorImage copyImage(){//REMOVE?
-		ColorImage res = new ColorImage(getWidth(), getHeight());
-		for (int i = 0; i < getHeight(); i++)
-			for (int j = 0; j < getWidth(); j++)
-					res.setColor(j, i, getColor(j, i));
-		return res;
-	}
-	/*ainda nao esta blindada para valores invalidos de x e y*/
-	ColorImage selection(int start_x, int start_y, int end_x, int end_y){//REMOVE?
-		ColorImage res = new ColorImage(end_x - start_x, end_y - start_y);
-		for (int i = start_y; i < end_y; i++)
-			for (int j = start_x; j < end_x; j++)
-					res.setColor(j - start_x, i - start_y, this.getColor(j, i));
-		return res;
-	}
-	
-	
 }

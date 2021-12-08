@@ -1,24 +1,26 @@
 class EditImage {
 	
-	static void copyImage(int xp, int yp, ColorImage res, ColorImage img){
+	static void pasteImage(int xp, int yp, ColorImage res, ColorImage img){
+		if (res == null || img == null)
+			throw new IllegalArgumentException("Arguments are null!");
 		for (int y = yp; y < img.getHeight() + yp && y < res.getHeight(); y++)
 			for (int x = xp; x < img.getWidth() + xp && x < res.getWidth(); x++)
 				if (!img.getColor(x - xp, y - yp).isSameColor(Color.WHITE))
 					res.setColor(x, y, img.getColor(x - xp, y - yp));
 	}
 	
-	static void fillImage(ColorImage img, ColorImage pat){
-		for (int y = 0; y < img.getWidth(); y += pat.getHeight())
+	static void fillPattern(ColorImage img, ColorImage pat){
+		for (int y = 0; y < img.getHeight(); y += pat.getHeight())
 			for (int x = 0; x < img.getWidth(); x += pat.getWidth())
-				copyImage(x, y, img, pat);
+				pasteImage(x, y, img, pat);
 		
 	}
 	
-	static ColorImage copyGrey(ColorImage img){
+	static ColorImage copyGray(ColorImage img){
 		ColorImage res = new ColorImage(img.getWidth(), img.getHeight());
 		for (int y = 0; y < res.getHeight(); y++)
 			for (int x = 0; x < res.getWidth(); x++)
-				res.setColor(x, y, img.getColor(x, y).setGrey());
+				res.setColor(x, y, img.getColor(x, y).setGray());
 		return res;
 	}
 	
