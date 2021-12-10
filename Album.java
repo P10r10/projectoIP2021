@@ -1,23 +1,23 @@
 class Album {
 	
 	Pagina[] paginas;
-	ColorImage album;
-	int index = 0;
+	private int width;
+	private int height;
+	int next = 0;
 	int currentPage = 0;
 	int totalPages = 0;
 	
 	Album(int width, int height, int numPages){
-		album = new ColorImage(width, height);
+		this.width = width;
+		this.height = height;
 		paginas = new Pagina[numPages]; 
 		totalPages = numPages;
 	}
 	
 	void addPage(Pagina page){
-		if (index == totalPages)
+		if (next == totalPages)
 			throw new IllegalStateException("Album has no more room for pages!");
-		paginas[index++] = page;
-		//album = page.pageImg;
-		//page.displayPhotos();
+		paginas[next++] = page;
 	}
 	void displayCurrentPage(){
 		if (paginas[currentPage] == null)
@@ -27,10 +27,20 @@ class Album {
 	}
 	
 	void nextPage(){
+		if (currentPage == totalPages)
+			throw new IllegalStateException("Already at the last page!");
 		currentPage++;
 		displayCurrentPage();
 	}
+	
+	void previousPage(){
+		if (currentPage == 0)
+			throw new IllegalStateException("You're at the 1st page!");
+		currentPage--;
+		displayCurrentPage();
+	}
+	
+	void swapPage(){
+		//IMPLEMENTAR
+	}
 }
-
-/*Álbum pode ser criado fornecendo a largura e altura
-do Álbum em pixéis e o número de páginas*/

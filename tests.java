@@ -4,9 +4,8 @@ class tests {
 
 	static void test1(){
 		ColorImage img = new ColorImage("mona.bmp");
-		ColorImage base = new ColorImage(200, 200);
-		base.invertColor();
-		EditImage.pasteImage(30, 40, base, img);
+		ColorImage base = new ColorImage("margot.png");
+		EditImage.pasteImage(75, 210, base, img);
 		System.out.println();//Colocar breakpoint nesta linha(Pandion)
 	}
 	
@@ -46,7 +45,7 @@ do centro a imagem começa a escurecer*/
 		ColorImage img = new ColorImage("margot.png");
 		ColorImage vignette = EditImage.vignette(img, 80);
 		ColorImage img2 = new ColorImage("refaeli.png");
-		ColorImage vignette2 = EditImage.vignette(img2, 65);
+		ColorImage vignette2 = EditImage.vignette(img2, 85);
 		System.out.println();//Colocar breakpoint nesta linha(Pandion)
 	}
 	
@@ -107,24 +106,14 @@ indica a página actual. Após a sua criação, deve ser possível:
 4. trocar as posições de duas páginas no álbum; */
 	
 	static void test9(){
-		ColorImage[] imgs = new ColorImage[4];
-		imgs[0] = new ColorImage("charlize.png");
-		imgs[1] = new ColorImage("diane.png");
-		imgs[2] = new ColorImage("refaeli.png");
-		imgs[3] = new ColorImage("margot.png");
 		
-		ColorImage[] imgs2 = new ColorImage[4];
-		imgs[0] = new ColorImage("margot.png");
-		imgs[1] = new ColorImage("refaeli.png");
-		imgs[2] = new ColorImage("diane.png");
-		imgs[3] = new ColorImage("charlize.png");
-		
-		Album myAlbum = new Album(0, 0, 2);
-		myAlbum.addPage(new Pagina(imgs, 440, 640));
-		myAlbum.addPage(new Pagina(imgs2, 440, 640));
+		Album myAlbum = new Album(675, 800, 3);
+		myAlbum.addPage(new Pagina(new Foto(new ColorImage("charlize.png"), "", ""), 675, 800));
+		myAlbum.addPage(new Pagina(new Foto(new ColorImage("diane.png"), "", ""), 675, 800));
+		myAlbum.addPage(new Pagina(new Foto(new ColorImage("refaeli.png"), "", ""), 675, 800));
 		myAlbum.displayCurrentPage();
-//		myAlbum.nextPage();
-		
+		myAlbum.nextPage();
+		myAlbum.nextPage();
 		System.out.println();//Colocar breakpoint nesta linha(Pandion)
 	}
 }
