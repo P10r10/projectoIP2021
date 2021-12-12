@@ -17,6 +17,13 @@ class Pagina {
 			fotos[lastPhoto++] = new Foto(vec[i], "Legenda", "Data");
 	}
 	
+	Pagina(int width, int height, ColorImage pattern){
+		pageImg = new ColorImage(width, height);
+		fillPattern(pattern);
+	}
+
+/* Calcula todos os x,y de cada foto do vector fotos por forma a ficarem *
+ * dispostos na página.                                                  */
 	void setPhotosPosition(){
 		int totalWidth = 0;
 		int totalHeight = 0;
@@ -41,7 +48,7 @@ class Pagina {
 	}
 	
 	void addPhoto(Foto photo){
-		if (lastPhoto == MAX - 1)
+		if (lastPhoto == fotos.length)
 			throw new IllegalStateException("Page has no more room for photos!");
 		fotos[lastPhoto++] = photo;
 		fillPattern(currentPattern);

@@ -1,23 +1,21 @@
+import java.util.Iterator;
+
 class Album {
 	
 	Pagina[] paginas;
-	private int width;
-	private int height;
-	int next = 0;
+	//int next = 0;
 	int currentPage = 0;
-	int totalPages = 0;
 	
 	Album(int width, int height, int numPages){
-		this.width = width;
-		this.height = height;
 		paginas = new Pagina[numPages]; 
-		totalPages = numPages;
+		for (int i = 0; i < paginas.length; i++)
+			//podemos alterar fundo pre-definido da página	
+			paginas[i] = new Pagina(width, height, new ColorImage("blue_leafs.bmp"));
 	}
 	
-	void addPage(Pagina page){
-		if (next == totalPages)
-			throw new IllegalStateException("Album has no more room for pages!");
-		paginas[next++] = page;
+//permite colocar uma foto na página à escolha
+	void addImgToPage(ColorImage img, int pageNb){
+		paginas[pageNb].addPhoto(new Foto(img, "", ""));
 	}
 	void displayCurrentPage(){
 		if (paginas[currentPage] == null)
@@ -27,7 +25,7 @@ class Album {
 	}
 	
 	void nextPage(){
-		if (currentPage == totalPages)
+		if (currentPage == paginas.length - 1)
 			throw new IllegalStateException("Already at the last page!");
 		currentPage++;
 		displayCurrentPage();
@@ -35,12 +33,14 @@ class Album {
 	
 	void previousPage(){
 		if (currentPage == 0)
-			throw new IllegalStateException("You're at the 1st page!");
+			throw new IllegalStateException("Already at the first page!");
 		currentPage--;
 		displayCurrentPage();
 	}
 	
-	void swapPage(){
-		//IMPLEMENTAR
+	void swapPage(int a, int b){
+		Pagina tmp = paginas[a];
+		paginas[a] = paginas[b];
+		paginas[b] = tmp;
 	}
 }

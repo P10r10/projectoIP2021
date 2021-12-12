@@ -44,7 +44,7 @@ do centro a imagem começa a escurecer*/
 	static void test5(){
 		ColorImage img = new ColorImage("margot.png");
 		ColorImage vignette = EditImage.vignette(img, 80);
-		ColorImage img2 = new ColorImage("refaeli.png");
+		ColorImage img2 = new ColorImage("diane.png");
 		ColorImage vignette2 = EditImage.vignette(img2, 85);
 		System.out.println();//Colocar breakpoint nesta linha(Pandion)
 	}
@@ -57,16 +57,16 @@ a data de criação e o posicionamento da imagem na página; */
 		ColorImage img = new ColorImage("face.bmp");
 		Foto myFoto = new Foto(img, "Arte Colorida", "12/11/2021");
 		System.out.println("Antes da alteração:");
-		System.out.println("A foto \"" + myFoto.caption
-			+"\" foi tirada a " + myFoto.date + ". Está na posição ("
+		System.out.println("A foto \"" + myFoto.getCaption()
+			+"\" foi tirada a " + myFoto.getDate() + ". Está na posição ("
 			+ myFoto.getX() + ", " + myFoto.getY() + ").");
-		myFoto.caption = "Rosto Pintado";
-		myFoto.date = "15/12/2021";
+		myFoto.setCaption("Rosto Pintado");
+		myFoto.setDate("15/12/2021");
 		myFoto.setX(111);
 		myFoto.setY(222);
 		System.out.println("\nDepois da alteração:");
-		System.out.println("A foto \"" + myFoto.caption
-		+"\" foi tirada a " + myFoto.date + ". Está na posição ("
+		System.out.println("A foto \"" + myFoto.getCaption()
+		+"\" foi tirada a " + myFoto.getDate() + ". Está na posição ("
 		+ myFoto.getX() + ", " + myFoto.getY() + ").");
 		
 		System.out.println();//Colocar breakpoint nesta linha(Pandion)
@@ -86,12 +86,18 @@ espaçamento mínimo de 5 pixel entre imagens e para as margens);
 		Pagina myPage = new Pagina(myFoto, 675, 800);
 		myPage.fillPattern(new ColorImage("mona.bmp"));
 		myPage.addPhoto(new Foto(new ColorImage("diane.png"), "", ""));
+		myPage.addPhoto(new Foto(new ColorImage("diane.png"), "", ""));
+		myPage.removePhoto(0);
 		myPage.addPhoto(new Foto(new ColorImage("face.bmp"), "", ""));
 		myPage.addPhoto(new Foto(new ColorImage("refaeli.png"), "", ""));
-		myPage.addPhoto(new Foto(new ColorImage("face.bmp"), "", ""));
-		myPage.addPhoto(new Foto(new ColorImage("margot.png"), "", ""));
-		myPage.removePhoto(2);
-		myPage.swapPhoto(4, 1);
+		myPage.removePhoto(1);
+		myPage.removePhoto(0);
+		myPage.removePhoto(0);
+		myPage.addPhoto(new Foto(new ColorImage("diane.png"), "", ""));
+		myPage.addPhoto(new Foto(new ColorImage("refaeli.png"), "", ""));
+//		myPage.addPhoto(new Foto(new ColorImage("face.bmp"), "", ""));
+//		myPage.addPhoto(new Foto(new ColorImage("margot.png"), "", ""));
+		myPage.swapPhoto(0, 1);
 		
 		System.out.println();//Colocar breakpoint nesta linha(Pandion)
 	}
@@ -107,13 +113,16 @@ indica a página actual. Após a sua criação, deve ser possível:
 	
 	static void test9(){
 		
-		Album myAlbum = new Album(675, 800, 3);
-		myAlbum.addPage(new Pagina(new Foto(new ColorImage("charlize.png"), "", ""), 675, 800));
-		myAlbum.addPage(new Pagina(new Foto(new ColorImage("diane.png"), "", ""), 675, 800));
-		myAlbum.addPage(new Pagina(new Foto(new ColorImage("refaeli.png"), "", ""), 675, 800));
-		myAlbum.displayCurrentPage();
+		Album myAlbum = new Album(675, 800, 2);
 		myAlbum.nextPage();
-		myAlbum.nextPage();
+		myAlbum.previousPage();
+		myAlbum.addImgToPage(new ColorImage("charlize.png"), 0);
+		myAlbum.addImgToPage(new ColorImage("diane.png"), 1);
+		myAlbum.addImgToPage(new ColorImage("margot.png"), 0);
+		myAlbum.addImgToPage(new ColorImage("refaeli.png"), 1);
+		//myAlbum.displayCurrentPage();
+		myAlbum.swapPage(0, 1);
+		
 		System.out.println();//Colocar breakpoint nesta linha(Pandion)
 	}
 }
